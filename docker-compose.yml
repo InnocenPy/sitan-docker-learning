@@ -1,0 +1,45 @@
+services:
+  # Base de données
+  db:
+    image: postgres:15-alpine
+    container_name: sitan-db
+    environment:
+      POSTGRES_USER: sitan_user
+      POSTGRES_PASSWORD: sitan_pass
+      POSTGRES_DB: sitan_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - sitan-network
+    restart: unless-stopped
+
+  # API NestJS
+  api:
+    build: .
+    container_name: sitan-api
+    ports:
+      - "3000:3000"
+    environment:
+      DB_HOST: db          # <-- Le nom du service ci-dessus
+      DB_PORT: 5432
+      DB_USER: sitan_user
+      DB_PASSWORD: sitan_pass
+      DB_NAME: sitan_db
+    depends_on:
+      - db
+    volumes:
+      - .:/app             # Hot-reload (code local synchronisé)
+      - /app/node_modules  # Évite d'écraser node_modules
+    networks:
+      - sitan-network
+    restart: unless-stopped
+
+# Volumes nommés (persistance)
+volumes:
+  postgres_data:
+
+# Réseau dédié
+networks:
+  sitan-network:
