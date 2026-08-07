@@ -1,66 +1,68 @@
-
+# FORMATION DOCKER SITAN-INFO
 
 ## Description
 
-[Nest](https://https://www.docker.com/) Effortlessly store, manage, and deploy containerized apps.
+Docker : stocker, gérer et déployer des applications conteneurisées.
+
+## Prérequis
+
+- Docker installé
+- docker-compose installé
 
 ## 1. Vérifier Docker
 
 ```bash
-$ docker --version && docker-compose --version
+docker --version
+docker-compose --version
 ```
 
-## 2. Lancer un premier conteneur pour tester
+## 2. Lancer un conteneur de test
 
 ```bash
-# creation d'un container
-$ docker run -d --name test-nginx -p 8080:80 nginx:alpine
+docker run -d --name test-nginx -p 8080:80 nginx:alpine
+```
 
-# 3. Explorer les commandes
+Commandes utiles :
+
+```bash
 docker ps
 docker logs test-nginx
 docker stop test-nginx
 docker rm test-nginx
 ```
 
-## Construction
+## 3. Construire l'image
 
 ```bash
-# Construction de l'image (nommez-la bien)
 docker build -t sitan-api:v1 .
+```
 
-# Inspecter l'image
+```bash
 docker images | grep sitan
 ```
 
-## Récapitulatif des commandes essentielles
+## 4. Commandes essentielles
+
 ```bash
-Commande	Utilité
-docker build -t mon-image | .	Construire une image
-docker images	| Lister les images locales
-docker-compose up -d	| Démarrer les services en arrière-plan
-docker-compose down	| Arrêter les services
-docker-compose ps	| Voir l’état des conteneurs
-docker-compose logs -f api	| Voir les logs en direct de l’API
-docker exec -it sitan-api sh	| Ouvrir un terminal dans le conteneur
-docker system prune -f	| Nettoyer les ressources inutilisées
+docker build -t mon-image .        # Construire une image
+docker images                     # Lister les images locales
+docker-compose up -d              # Démarrer les services en arrière-plan
+docker-compose down               # Arrêter les services
+docker-compose ps                 # Voir l’état des conteneurs
+docker-compose logs -f api        # Suivre les logs de l’API
+docker exec -it sitan-api sh      # Ouvrir un terminal dans le conteneur
+docker system prune -f            # Nettoyer les ressources inutilisées
 ```
 
+## 5. Deployment
 
-## Deployment
-
+Ajouter ici les commandes et la procédure de déploiement pour votre projet.
 
 ## Resources
 
-Check out a few resources that may come in handy when working with docker:
-
-- Visit the [Documentation Officielle](https://doc.docker.com) to learn more about the docker.
-
-- Visit the [Docker hub](https://hub.docker.com) for images publique
-
-- Visit the [Guide install](https://docs.docker.com/engine/install)
-
-- Visit the [Sheat sheet](https://docs.docker.com/get-started/docker_cheatsheet.pdf) for the help memorie
-
-- Visit the [Docker in Web](https://labs.play-with-docker.com) Pour Bac à sable en ligne (sans installation)
+- Documentation officielle : https://docs.docker.com
+- Docker Hub : https://hub.docker.com
+- Guide d’installation : https://docs.docker.com/engine/install
+- Cheat sheet : https://docs.docker.com/get-started/docker_cheatsheet.pdf
+- Docker en ligne : https://labs.play-with-docker.com
 
