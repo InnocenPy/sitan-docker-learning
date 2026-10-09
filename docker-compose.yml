@@ -8,12 +8,32 @@ services:
       POSTGRES_PASSWORD: sitan_pass
       POSTGRES_DB: sitan_db
     ports:
-      - "5432:5432"
+      - "5434:5432"
     volumes:
-      - postgres_data:/var/lib/postgresql/data
+      - datablablaba:/var/lib/postgresql/data
+      # - postgres_data:/var/lib/postgresql/data
+      # - ./data/postgres:/var/lib/postgresql/data
+      - C:\postgres_data_test/postgres:/var/lib/postgresql/data
     networks:
       - sitan-network
+      
     restart: unless-stopped
+
+  # Frontend
+  frontend:
+    image: glpi/glpi:latest
+    restart: unless-stopped
+    volumes:
+      - glpi_data:/var/glpi
+      # Pour GLPI 10.x, tu peux activer le marketplace :
+      # - ./storage/glpi_marketplace:/var/www/glpi/marketplace/:rw
+    env_file: .env
+    # depends_on:
+    #   - db
+    ports:
+      - "80:80"
+    networks:
+      - sitan-network2
 
   # API NestJS
   api:
@@ -29,17 +49,20 @@ services:
       DB_NAME: sitan_db
     depends_on:
       - db
-    volumes:
-      - .:/app             # Hot-reload (code local synchronisé)
-      - /app/node_modules  # Évite d'écraser node_modules
+    #volumes:
+      #- .:/app             # Hot-reload (code local synchronisé)
+      #- /app/node_modules  # Évite d'écraser node_modules
     networks:
       - sitan-network
+      - sitan-network2
     restart: unless-stopped
 
 # Volumes nommés (persistance)
 volumes:
-  postgres_data:
+  postgres_database:
+  glpi_data:
 
 # Réseau dédié
 networks:
   sitan-network:
+  sitan-network2:

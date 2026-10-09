@@ -52,6 +52,9 @@ docker-compose ps                 # Voir l’état des conteneurs
 docker-compose logs -f api        # Suivre les logs de l’API
 docker exec -it sitan-api sh      # Ouvrir un terminal dans le conteneur
 docker system prune -f            # Nettoyer les ressources inutilisées
+docker network ls
+docker network inspect sitan-network
+docker exec -it sitan-api ping db
 ```
 
 ## 5. Deployment
